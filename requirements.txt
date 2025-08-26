@@ -1,0 +1,4 @@
+# SSL Certificate Checker - Pure Python Version
+# 필수 라이브러리
+
+cryptography>=41.0.0
