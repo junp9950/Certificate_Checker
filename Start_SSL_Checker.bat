@@ -1,12 +1,12 @@
 @echo off
-title SSL Certificate Checker v2.0
+title SSL Certificate Checker v3.0
 setlocal enabledelayedexpansion
 
 cls
 echo.
 echo ================================================================
-echo                SSL Certificate Checker v2.0
-echo                    Pure Python Edition
+echo                SSL Certificate Checker v3.0
+echo              Enhanced UI with Chain Visualization
 echo                   No OpenSSL Required!
 echo ================================================================
 echo.
@@ -28,7 +28,7 @@ python --version
 echo Python OK!
 
 echo.
-echo [STEP 2/3] Checking cryptography library...
+echo [STEP 2/4] Checking cryptography library...
 python -c "import cryptography" >nul 2>&1
 if %errorlevel% neq 0 (
     echo cryptography library not found. Installing...
@@ -50,11 +50,31 @@ if %errorlevel% neq 0 (
 )
 
 echo.
-echo [STEP 3/3] Starting SSL Certificate Checker...
+echo [STEP 3/4] Checking tkinterdnd2 library (for drag-and-drop)...
+python -c "import tkinterdnd2" >nul 2>&1
+if %errorlevel% neq 0 (
+    echo tkinterdnd2 library not found. Installing for drag-and-drop support...
+    echo.
+    python -m pip install tkinterdnd2
+    
+    if !errorlevel! neq 0 (
+        echo.
+        echo tkinterdnd2 installation failed (non-critical)
+        echo App will still work without drag-and-drop from File Explorer
+        echo.
+    ) else (
+        echo tkinterdnd2 installed successfully! Drag-and-drop enabled.
+    )
+) else (
+    echo tkinterdnd2 library OK! Full drag-and-drop support available.
+)
+
+echo.
+echo [STEP 4/4] Starting SSL Certificate Checker...
 echo ================================================================
 echo.
 
-python ssl_checker_pure.py
+python ssl_checker_v3.py
 
 if %errorlevel% neq 0 (
     echo.
